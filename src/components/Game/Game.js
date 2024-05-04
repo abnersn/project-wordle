@@ -27,7 +27,10 @@ function Game() {
   }
 
   return <>
-    <GuessResults guessResults={guessResults} />
+    <GuessResults
+      guessResults={guessResults}
+      answer={answer}
+    />
     <form
       onSubmit={handleSubmit}
       className='guess-input-wrapper'
