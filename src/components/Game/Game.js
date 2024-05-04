@@ -26,7 +26,28 @@ function Game() {
     }
   }
 
+  const lastGuess = guessResults[
+    guessResults.length - 1
+  ]
+
+  const isGuessCorrect = (lastGuess === answer)
+  const isLimitReached = (guessResults.length === NUM_OF_GUESSES_ALLOWED)
+
+  const disableInput = isGuessCorrect || isLimitReached
+
   return <>
+    {isGuessCorrect && <div className='happy banner'>
+      <p>
+        <strong>Congratulations!</strong> Got it in{' '}
+        <strong>{guessResults.length} guesses</strong>.
+      </p>
+    </div>}
+    {isLimitReached &&
+      <div className='sad banner'>
+        <p>
+          Sorry, the correct answer is <strong>{answer}</strong>.
+        </p>
+      </div>}
     <GuessResults
       guessResults={guessResults}
       answer={answer}
@@ -35,8 +56,9 @@ function Game() {
       onSubmit={handleSubmit}
       className='guess-input-wrapper'
     >
-      <label for='guess-input'>Enter guess:</label>
+      <label htmlFor='guess-input'>Enter guess:</label>
       <input
+        disabled={disableInput}
         id='guess-input'
         value={guess}
         minLength={5}
